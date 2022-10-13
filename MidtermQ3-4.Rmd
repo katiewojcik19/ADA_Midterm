@@ -43,5 +43,9 @@ titanic%>%
 
 ggsave("Titanic Plot.png")
 ```
+```{r}
+# percent male/female by passenger class
+prop.table(table(titanic$Sex, titanic$Pclass))*100
+```
 
 ```
