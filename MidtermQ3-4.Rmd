@@ -1,0 +1,47 @@
+---
+title: "MidtermQ3-4"
+author: "Katie Wojcik"
+date: "2022-10-13"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+# Importing the dataset
+library(readr)
+library(dplyr)
+library(ggplot2)
+
+titanic <- read.csv("https://raw.githubusercontent.com/kijohnson/Data/main/titanic.csv")
+```
+
+```{r}
+# determine the median age by passenger class
+summary(titanic$Pclass)
+by(titanic$Age, titanic$Pclass, summary)
+
+# The median age in passenger class 1 is 38.5. The median age in passenger class 2 is 29. The median age in passenger class 3 is 24. 
+```
+
+```{r}
+# boxplot
+titanic <- titanic%>%
+  mutate(Pclass = recode_factor(.x = Pclass,
+                                `1` = "1",
+                                `2` = "2",
+                                `3` = "3"))
+
+titanic%>%
+  ggplot(aes(x = Pclass, y = Age)) +
+      geom_boxplot(aes(fill = Pclass)) +
+      labs(x = "Passenger Class", y = "Age") +
+      theme_bw()
+
+ggsave("Titanic Plot.png")
+```
+
+```
